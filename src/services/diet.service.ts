@@ -14,7 +14,7 @@ export interface AddFoodDto {
 export function addRecord(db: Database.Database, dto: AddFoodDto) {
   try {
     const statement = db.prepare(`
-      INSERT INTO food (create_at, eat_at, meal_type, title, food, calories, protein, carbs, fat)
+      INSERT INTO diet (create_at, eat_at, meal_type, title, food, calories, protein, carbs, fat)
       VALUES (@create_at, @eat_at, @meal_type, @title, @food, @calories, @protein, @carbs, @fat)
     `);
 

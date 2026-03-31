@@ -57,7 +57,7 @@ export default class AddLunch extends Command {
       eatAt: flags.at,
       mealType: "lunch",
       title: flags.title,
-      food: flags.food,
+      food: args.food,
     });
 
     this.log(`Added lunch #${result.lastInsertRowid}`);
