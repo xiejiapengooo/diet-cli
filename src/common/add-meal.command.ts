@@ -6,7 +6,6 @@ import { addRecord } from "../services/diet.service.js";
 
 export abstract class AddMealCommand extends Command {
   protected abstract readonly mealType: AddFoodDto["mealType"];
-  protected abstract readonly mealLabel: string;
 
   static override args = {
     food: Args.string({ description: "what you eat", required: true }),
@@ -21,8 +20,19 @@ export abstract class AddMealCommand extends Command {
     fat: Flags.integer({ description: "fat in grams (g)", required: true }),
   };
 
+  protected parseMealInput() {
+    const ctor = this.ctor;
+    return this.parse({
+      args: ctor.args,
+      flags: ctor.flags,
+      strict: ctor.strict,
+      baseFlags: ctor.baseFlags,
+      enableJsonFlag: ctor.enableJsonFlag,
+    });
+  }
+
   public async run(): Promise<void> {
-    const { args, flags } = await this.parse(this.ctor as typeof AddMealCommand);
+    const { args, flags } = await this.parseMealInput();
 
     const valuesToValidate = [
       ["calories", flags.calories],
@@ -54,7 +64,7 @@ export abstract class AddMealCommand extends Command {
       food: args.food,
     });
 
-    this.log(`Added ${this.mealLabel} #${result.lastInsertRowid}`);
+    this.log(`Added ${this.mealType} #${result.lastInsertRowid}`);
     this.log(`Food: ${args.food}`);
     this.log(`EatAt: ${flags.at}`);
   }

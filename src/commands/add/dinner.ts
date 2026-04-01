@@ -8,5 +8,4 @@ export default class AddDinner extends AddMealCommand {
   ];
 
   protected override readonly mealType = "dinner";
-  protected override readonly mealLabel = "dinner";
 }
