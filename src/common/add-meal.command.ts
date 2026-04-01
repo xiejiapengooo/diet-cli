@@ -64,8 +64,8 @@ export abstract class AddMealCommand extends Command {
       food: args.food,
     });
 
-    this.log(`Added ${this.mealType} #${result.lastInsertRowid}`);
-    this.log(`Food: ${args.food}`);
-    this.log(`EatAt: ${flags.at}`);
+    process.stdout.write(`Added ${this.mealType} #${result.lastInsertRowid}\n`);
+    process.stdout.write(`Food: ${args.food}\n`);
+    process.stdout.write(`EatAt: ${flags.at}\n`);
   }
 }
