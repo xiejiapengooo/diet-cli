@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/commands/add/dinner.ts","./src/commands/add/lunch.ts","./src/common/add-meal.command.ts","./src/db/db.ts","./src/services/diet.service.ts"],"version":"5.9.3"}
+{"root":["./src/index.ts","./src/commands/add/breakfast.ts","./src/commands/add/dinner.ts","./src/commands/add/lunch.ts","./src/commands/add/snack.ts","./src/common/add-meal.command.ts","./src/db/db.ts","./src/services/diet.service.ts"],"version":"5.9.3"}
