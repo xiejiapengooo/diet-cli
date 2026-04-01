@@ -58,7 +58,7 @@ export abstract class AddMealCommand extends Command {
       protein: flags.protein,
       carbs: flags.carbs,
       fat: flags.fat,
-      eatAt: flags.at,
+      eatAt: eatAt,
       mealType: this.mealType,
       title: flags.title,
       food: args.food,
