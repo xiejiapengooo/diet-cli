@@ -1,11 +1,11 @@
-import { Args, Command, Flags } from "@oclif/core";
 import path from "node:path";
+import { Args, Command, Flags } from "@oclif/core";
 import { createDietDatabase } from "../db/db.js";
-import type { AddFoodDto } from "../services/diet.service.js";
 import { addRecord } from "../services/diet.service.js";
+import { MealType } from "../types/index.js";
 
 export abstract class AddMealCommand extends Command {
-  protected abstract readonly mealType: AddFoodDto["mealType"];
+  protected abstract readonly mealType: MealType;
 
   static override args = {
     food: Args.string({ description: "what you eat", required: true }),
