@@ -1,4 +1,0 @@
-interface:
-  display_name: "Diet CLI"
-  short_description: "Use installed diet CLI to add/search meal records"
-  default_prompt: "Use $diet-cli to run installed `diet` commands for meal logging and history search."
