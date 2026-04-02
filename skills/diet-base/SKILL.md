@@ -1,5 +1,5 @@
 ---
-name: diet-cli
+name: diet-base
 version: 0.0.1
 description: "diet-cli 用户安装版使用方法：基于已安装的 `diet` 命令新增 breakfast/lunch/dinner/snack 记录，并按关键词与时间范围检索历史。用户让 AI agent 调用该 CLI 时使用。"
 metadata:
