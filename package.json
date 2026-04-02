@@ -3,10 +3,17 @@
   "description": "daily diet record",
   "version": "0.0.0",
   "author": "JP",
+  "homepage": "https://github.com/xiejiapengooo/diet-cli",
+  "repository": "https://github.com/xiejiapengooo/diet-cli",
   "bin": {
     "diet": "./bin/run.js"
   },
-  "bugs": "https://github.com/Code/diet-cli/issues",
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "prepack": "oclif manifest && oclif readme",
+    "version": "oclif readme && git add README.md"
+  },
   "dependencies": {
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
@@ -34,9 +41,9 @@
     "./dist",
     "./oclif.manifest.json"
   ],
-  "homepage": "https://github.com/Code/diet-cli",
   "keywords": [
-    "oclif"
+    "diet",
+    "cli"
   ],
   "license": "MIT",
   "main": "dist/index.js",
@@ -48,20 +55,7 @@
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-plugins"
-    ],
-    "topicSeparator": " ",
-    "topics": {
-      "hello": {
-        "description": "Say hello to the world and others"
-      }
-    }
-  },
-  "repository": "Code/diet-cli",
-  "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
-    "postpack": "shx rm -f oclif.manifest.json",
-    "prepack": "oclif manifest && oclif readme",
-    "version": "oclif readme && git add README.md"
+    ]
   },
   "types": "dist/index.d.ts"
 }
