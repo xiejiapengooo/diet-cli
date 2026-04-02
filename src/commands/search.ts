@@ -53,18 +53,20 @@ export default class Search extends Command {
       return;
     }
 
-    for (const record of records) {
-      process.stdout.write(`#${record.id} | ${record.meal_type} | ${record.eat_at}\n`);
-      process.stdout.write(`Title: ${record.title}\n`);
-      process.stdout.write(`Food: ${record.food}\n`);
-      process.stdout.write(
-        `Nutrition: kcal=${this.formatNullableNumber(record.calories)} ` +
-          `P=${this.formatNullableNumber(record.protein)}g ` +
-          `C=${this.formatNullableNumber(record.carbs)}g ` +
-          `F=${this.formatNullableNumber(record.fat)}g\n`,
-      );
-      process.stdout.write("\n");
-    }
+    const headers = ["id", "meal", "eat_at", "title", "food", "kcal", "P(g)", "C(g)", "F(g)"];
+    const rows = records.map((record) => [
+      String(record.id),
+      record.meal_type,
+      record.eat_at,
+      record.title,
+      record.food,
+      String(record.calories),
+      String(record.protein),
+      String(record.carbs),
+      String(record.fat),
+    ]);
+
+    process.stdout.write(this.renderTable(headers, rows));
   }
 
   private parseDateFlag(value: string | undefined, flagName: "--from" | "--to"): Date | undefined {
@@ -80,7 +82,25 @@ export default class Search extends Command {
     return parsed;
   }
 
-  private formatNullableNumber(value: number | null): string {
-    return value === null ? "-" : String(value);
+  private renderTable(headers: string[], rows: string[][]): string {
+    const columnWidths = headers.map((header, columnIndex) =>
+      Math.max(header.length, ...rows.map((row) => row[columnIndex].length)),
+    );
+
+    const createBorder = () => `+${columnWidths.map((width) => "-".repeat(width + 2)).join("+")}+\n`;
+    const createRow = (values: string[]) =>
+      `| ${values.map((value, index) => value.padEnd(columnWidths[index], " ")).join(" | ")} |\n`;
+
+    let output = "";
+    output += createBorder();
+    output += createRow(headers);
+    output += createBorder();
+
+    for (const row of rows) {
+      output += createRow(row);
+    }
+
+    output += createBorder();
+    return output;
   }
 }
