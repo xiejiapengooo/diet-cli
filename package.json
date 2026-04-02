@@ -5,10 +5,13 @@
   "author": "JP",
   "license": "MIT",
   "homepage": "https://github.com/xiejiapengooo/diet-cli",
-  "repository": "https://github.com/xiejiapengooo/diet-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiejiapengooo/diet-cli.git"
+  },
   "main": "dist/index.js",
   "bin": {
-    "diet": "./bin/run.js"
+    "diet": "bin/run.js"
   },
   "scripts": {
     "postpack": "shx rm -f oclif.manifest.json",
