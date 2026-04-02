@@ -3,15 +3,17 @@
   "description": "daily diet record",
   "version": "0.0.0",
   "author": "JP",
+  "license": "MIT",
   "homepage": "https://github.com/xiejiapengooo/diet-cli",
   "repository": "https://github.com/xiejiapengooo/diet-cli",
+  "main": "dist/index.js",
   "bin": {
     "diet": "./bin/run.js"
   },
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
     "postpack": "shx rm -f oclif.manifest.json",
     "prepack": "oclif manifest && oclif readme",
+    "build": "shx rm -rf dist && tsc -b",
     "version": "oclif readme && git add README.md"
   },
   "dependencies": {
@@ -45,8 +47,6 @@
     "diet",
     "cli"
   ],
-  "license": "MIT",
-  "main": "dist/index.js",
   "type": "module",
   "oclif": {
     "bin": "diet",
