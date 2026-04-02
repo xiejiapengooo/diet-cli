@@ -2,7 +2,7 @@ import { Args, Command, Flags } from "@oclif/core";
 import path from "node:path";
 import { createDietDatabase } from "../db/db.js";
 import { searchRecords } from "../services/diet.service.js";
-import { MealTypes } from "../types/index.js";
+import { MealType, MealTypes } from "../types/index.js";
 
 export default class Search extends Command {
   static override description = "search diet records by keyword";
@@ -37,18 +37,15 @@ export default class Search extends Command {
       this.error("keyword cannot be empty");
     }
 
-    const fromDate = this.parseDateFlag(flags.from, "--from");
-    const toDate = this.parseDateFlag(flags.to, "--to");
-    if (fromDate && toDate && fromDate.getTime() > toDate.getTime()) {
-      this.error("--from must be earlier than or equal to --to");
-    }
+    const fromEatAt = this.parseDateFlag(flags.from, "--from");
+    const toEatAt = this.parseDateFlag(flags.to, "--to");
 
     const db = createDietDatabase(path.join(this.config.dataDir, "diet.db"));
     const records = searchRecords(db, {
       keyword,
-      mealType: flags.meal,
-      fromEatAt: fromDate?.toISOString(),
-      toEatAt: toDate?.toISOString(),
+      fromEatAt,
+      toEatAt,
+      mealType: flags.meal as MealType | undefined,
     });
 
     if (records.length === 0) {
@@ -57,7 +54,7 @@ export default class Search extends Command {
     }
 
     for (const record of records) {
-      process.stdout.write(`#${record.id} | ${record.mealType} | ${record.eatAt}\n`);
+      process.stdout.write(`#${record.id} | ${record.meal_type} | ${record.eat_at}\n`);
       process.stdout.write(`Title: ${record.title}\n`);
       process.stdout.write(`Food: ${record.food}\n`);
       process.stdout.write(

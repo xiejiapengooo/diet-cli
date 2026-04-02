@@ -14,7 +14,7 @@ export function addRecord(db: Database.Database, dto: AddFoodDto) {
       fat: dto.fat ?? 0,
       protein: dto.protein ?? 0,
       create_at: new Date().toISOString(),
-      eat_at: new Date(dto.eatAt).toISOString(),
+      eat_at: dto.eatAt.toISOString(),
       food: dto.food,
       meal_type: dto.mealType,
       title: dto.title,
@@ -38,33 +38,20 @@ export function searchRecords(db: Database.Database, dto: SearchDietDto): DietRe
 
     if (dto.fromEatAt) {
       conditions.push("eat_at >= @from_eat_at");
-      params.from_eat_at = dto.fromEatAt;
+      params.from_eat_at = dto.fromEatAt.toISOString();
     }
 
     if (dto.toEatAt) {
       conditions.push("eat_at <= @to_eat_at");
-      params.to_eat_at = dto.toEatAt;
+      params.to_eat_at = dto.toEatAt.toISOString();
     }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
-    const statement = db.prepare(`
-      SELECT
-        id,
-        create_at AS createAt,
-        eat_at AS eatAt,
-        meal_type AS mealType,
-        title,
-        food,
-        calories,
-        protein,
-        carbs,
-        fat
-      FROM diet
-      ${whereClause}
-      ORDER BY eat_at DESC
+    const statement = db.prepare<any, DietRecord>(`
+      SELECT * FROM diet ${whereClause} ORDER BY eat_at DESC
     `);
 
-    return statement.all(params) as DietRecord[];
+    return statement.all(params);
   } finally {
     db.close();
   }

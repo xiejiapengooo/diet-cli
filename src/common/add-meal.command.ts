@@ -20,17 +20,6 @@ export abstract class AddMealCommand extends Command {
     fat: Flags.integer({ description: "fat in grams (g)", required: true }),
   };
 
-  protected parseMealInput() {
-    const ctor = this.ctor;
-    return this.parse({
-      args: ctor.args,
-      flags: ctor.flags,
-      strict: ctor.strict,
-      baseFlags: ctor.baseFlags,
-      enableJsonFlag: ctor.enableJsonFlag,
-    });
-  }
-
   public async run(): Promise<void> {
     const { args, flags } = await this.parseMealInput();
 
@@ -47,10 +36,7 @@ export abstract class AddMealCommand extends Command {
       }
     }
 
-    const eatAt = new Date(flags.at);
-    if (Number.isNaN(eatAt.getTime())) {
-      this.error('--at must be a valid datetime, e.g. "2026-03-31 12:30"');
-    }
+    const eatAt = this.parseDateFlag(flags.at, "--at");
 
     const db = createDietDatabase(path.join(this.config.dataDir, "diet.db"));
     const result = addRecord(db, {
@@ -58,7 +44,7 @@ export abstract class AddMealCommand extends Command {
       protein: flags.protein,
       carbs: flags.carbs,
       fat: flags.fat,
-      eatAt: eatAt,
+      eatAt,
       mealType: this.mealType,
       title: flags.title,
       food: args.food,
@@ -67,5 +53,29 @@ export abstract class AddMealCommand extends Command {
     process.stdout.write(`Added ${this.mealType} #${result.lastInsertRowid}\n`);
     process.stdout.write(`Food: ${args.food}\n`);
     process.stdout.write(`EatAt: ${flags.at}\n`);
+  }
+
+  protected parseMealInput() {
+    const ctor = this.ctor;
+    return this.parse({
+      args: ctor.args,
+      flags: ctor.flags,
+      strict: ctor.strict,
+      baseFlags: ctor.baseFlags,
+      enableJsonFlag: ctor.enableJsonFlag,
+    });
+  }
+
+  private parseDateFlag(value: string, flagName: "--at"): Date {
+    if (!value) {
+      this.error(`${flagName} must be a valid datetime, e.g. "2026-03-31 12:30"`);
+    }
+
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+      this.error(`${flagName} must be a valid datetime, e.g. "2026-03-31 12:30"`);
+    }
+
+    return parsed;
   }
 }

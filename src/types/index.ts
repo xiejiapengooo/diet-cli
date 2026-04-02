@@ -12,7 +12,7 @@ export interface AddFoodDto {
   protein: number;
   carbs: number;
   fat: number;
-  eatAt: string;
+  eatAt: Date;
   mealType: MealType;
   title: string;
   food: string;
@@ -21,15 +21,15 @@ export interface AddFoodDto {
 export interface SearchDietDto {
   keyword: string;
   mealType?: MealType;
-  fromEatAt?: string;
-  toEatAt?: string;
+  fromEatAt?: Date;
+  toEatAt?: Date;
 }
 
 export interface DietRecord {
   id: number;
-  createAt: string;
-  eatAt: string;
-  mealType: MealType;
+  create_at: string;
+  eat_at: string;
+  meal_type: MealType;
   title: string;
   food: string;
   calories: number;
