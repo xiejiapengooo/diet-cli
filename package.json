@@ -1,5 +1,5 @@
 {
-  "name": "diet-cli",
+  "name": "@xiejiapeng/diet-cli",
   "description": "daily diet record",
   "version": "0.0.0",
   "author": "JP",
@@ -8,6 +8,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xiejiapengooo/diet-cli.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "main": "dist/index.js",
   "bin": {
