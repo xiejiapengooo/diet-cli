@@ -1,7 +1,7 @@
 ---
 name: diet-base
 version: 0.0.1
-description: "diet-cli 用户安装版使用方法：基于已安装的 `diet` 命令新增 breakfast/lunch/dinner/snack 记录，并按关键词与时间范围检索历史。用户让 AI agent 调用该 CLI 时使用。"
+description: ""
 metadata:
   requires:
     bins: ["diet"]
@@ -22,10 +22,7 @@ metadata:
 
 1. 默认使用已安装命令：`diet ...`
 2. 执行前先用 `diet --help` 或 `diet add --help` 快速确认命令可用
-3. 写入操作（`add:*`）后，优先回显新增结果中的 `id`、`Food`、`EatAt`
-4. 先写后查时串行执行，避免 SQLite `database is locked`
-5. 用户说相对时间（今天/明天/昨晚）时，先换算为绝对时间再执行（示例：`2026-04-02 12:30`）
-6. 仅在“已经发生的进食行为”时触发
+3. 先写后查时串行执行，避免 SQLite `database is locked`
 
 ## Shortcuts
 
@@ -33,7 +30,7 @@ metadata:
 - [`+add`](./references/add.md) - 新增饮食记录（四类餐别）
 - [`+search`](./references/search.md) - 按关键词/餐别/时间范围检索记录
 - [`+db`](./references/db.md) - 定位和检查本地 SQLite 数据库
-- [`+time`](./references/time.md) - 相对时间到绝对时间映射规则
+- [`+message`](./references/message.md) - 收集用户饮食信息，并规范输出
 
 ## 标准流程
 
@@ -43,10 +40,10 @@ metadata:
 
 ### Step 2: 执行用户任务
 
+- 收集用户饮食信息：走 [`+message`](./references/message.md)
 - 记录饮食：走 [`+add`](./references/add.md)
 - 查历史记录：走 [`+search`](./references/search.md)
 - 看数据文件：走 [`+db`](./references/db.md)
-- 解析时间口语：走 [`+time`](./references/time.md)
 
 ## 输出约定
 
