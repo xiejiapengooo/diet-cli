@@ -7,15 +7,15 @@ export const MealTypes = {
 
 export type MealType = (typeof MealTypes)[keyof typeof MealTypes];
 
-export interface AddFoodDto {
+export interface AddMealDto {
   calories: number;
   protein: number;
   carbs: number;
   fat: number;
-  eatAt: Date;
+  eatAt: string;
   mealType: MealType;
   title: string;
-  food: string;
+  foods: string;
 }
 
 export interface SearchDietDto {
@@ -36,4 +36,8 @@ export interface DietRecord {
   protein: number;
   carbs: number;
   fat: number;
+}
+
+export interface UserConfig {
+  timezone: string;
 }

@@ -27,6 +27,7 @@
     "@oclif/plugin-help": "^6",
     "@oclif/plugin-plugins": "^5",
     "better-sqlite3": "^12.8.0",
+    "dayjs": "^1.11.20",
     "prettier": "^3.8.1"
   },
   "devDependencies": {
