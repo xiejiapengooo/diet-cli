@@ -1,8 +1,8 @@
 import { Args, Command, Flags } from "@oclif/core";
-import path from "node:path";
-import { createDietDatabase } from "../db/db.js";
+import { getDietDatabase } from "../db/db.js";
 import { searchRecords } from "../services/diet.service.js";
 import { MealType, MealTypes } from "../types/index.js";
+import { parseDateFlag, readUserConfig } from "../utils/command.js";
 
 export default class Search extends Command {
   static override description = "search diet records by keyword";
@@ -13,7 +13,7 @@ export default class Search extends Command {
   ];
 
   static override args = {
-    keyword: Args.string({ description: "keyword to match in title or food", required: true }),
+    keyword: Args.string({ description: "keyword to match in foods", required: true }),
   };
 
   static override flags = {
@@ -30,6 +30,7 @@ export default class Search extends Command {
   };
 
   public async run(): Promise<void> {
+    const userConfig = readUserConfig(this);
     const { args, flags } = await this.parse(Search);
 
     const keyword = args.keyword.trim();
@@ -37,15 +38,16 @@ export default class Search extends Command {
       this.error("keyword cannot be empty");
     }
 
-    const fromEatAt = this.parseDateFlag(flags.from, "--from");
-    const toEatAt = this.parseDateFlag(flags.to, "--to");
+    const mealType = flags.meal as (MealType | undefined);
+    const fromEatAt = flags.from ? parseDateFlag(this, flags.from, "--from", userConfig.timezone) : void 0;
+    const toEatAt = flags.to ? parseDateFlag(this, flags.to, "--to", userConfig.timezone) : void 0;
 
-    const db = createDietDatabase(path.join(this.config.dataDir, "diet.db"));
+    const db = getDietDatabase(this.config.dataDir);
     const records = searchRecords(db, {
       keyword,
       fromEatAt,
       toEatAt,
-      mealType: flags.meal as MealType | undefined,
+      mealType
     });
 
     if (records.length === 0) {
@@ -67,19 +69,6 @@ export default class Search extends Command {
     ]);
 
     process.stdout.write(this.renderTable(headers, rows));
-  }
-
-  private parseDateFlag(value: string | undefined, flagName: "--from" | "--to"): Date | undefined {
-    if (!value) {
-      return undefined;
-    }
-
-    const parsed = new Date(value);
-    if (Number.isNaN(parsed.getTime())) {
-      this.error(`${flagName} must be a valid datetime, e.g. "2026-03-31 12:30"`);
-    }
-
-    return parsed;
   }
 
   private renderTable(headers: string[], rows: string[][]): string {

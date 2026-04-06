@@ -14,7 +14,7 @@ export default class UserTimezone extends Command {
     timezone: Args.string({ description: "IANA timezone, e.g. Asia/Shanghai", required: true }),
   };
 
-  public async run(): Promise<void> {
+  public async run() {
     const { args } = await this.parse(UserTimezone);
 
     const timezone = args.timezone.trim();

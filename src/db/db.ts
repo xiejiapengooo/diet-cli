@@ -2,10 +2,10 @@ import Database from "better-sqlite3";
 import fs from "node:fs";
 import path from "node:path";
 
-export function createDietDatabase(dbPath: string): Database.Database {
-  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+export function getDietDatabase(dbDirPath: string): Database.Database {
+  fs.mkdirSync(dbDirPath, { recursive: true });
 
-  const db = new Database(dbPath);
+  const db = new Database(path.join(dbDirPath, "diet.db"));
   db.pragma("journal_mode = WAL");
   db.exec(`
     CREATE TABLE IF NOT EXISTS diet (

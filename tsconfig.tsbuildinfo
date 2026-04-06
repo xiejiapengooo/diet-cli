@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/commands/add.ts","./src/commands/search.ts","./src/commands/user/timezone.ts","./src/db/db.ts","./src/services/diet.service.ts","./src/types/index.ts","./src/utils/datetime.ts"],"version":"5.9.3"}
+{"root":["./src/index.ts","./src/commands/add.ts","./src/commands/search.ts","./src/commands/user/timezone.ts","./src/db/db.ts","./src/services/diet.service.ts","./src/types/index.ts","./src/utils/command.ts","./src/utils/datetime.ts"],"version":"5.9.3"}

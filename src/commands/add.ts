@@ -1,10 +1,8 @@
-import path from "node:path";
 import { Command, Flags } from "@oclif/core";
-import { createDietDatabase } from "../db/db.js";
+import { getDietDatabase } from "../db/db.js";
 import { addRecord } from "../services/diet.service.js";
-import { MealType, MealTypes, UserConfig } from "../types/index.js";
-import fs from "node:fs";
-import datetime from "../utils/datetime.js";
+import { MealType, MealTypes } from "../types/index.js";
+import { parseDateFlag, readUserConfig } from "../utils/command.js";
 
 export default class Add extends Command {
   static override description = "add a diet record for any meal type";
@@ -31,8 +29,8 @@ export default class Add extends Command {
     fat: Flags.integer({ description: "fat in grams (g)", required: true }),
   };
 
-  public async run(): Promise<void> {
-    const userConfig = this.readUserConfig();
+  public async run() {
+    const userConfig = readUserConfig(this);
     const { flags } = await this.parse(Add);
     const mealType = flags.meal as MealType;
     const foods = flags.foods.trim();
@@ -54,9 +52,9 @@ export default class Add extends Command {
       }
     }
 
-    const eatAt = this.parseDateFlag(flags.at, "--at", userConfig.timezone);
+    const eatAt = parseDateFlag(this, flags.at, "--at", userConfig.timezone);
 
-    const db = createDietDatabase(path.join(this.config.dataDir, "diet.db"));
+    const db = getDietDatabase(this.config.dataDir);
     const record = addRecord(db, {
       calories: flags.calories,
       protein: flags.protein,
@@ -67,51 +65,6 @@ export default class Add extends Command {
       eatAt,
     });
 
-    process.stdout.write(`${JSON.stringify(record)}\n`);
-  }
-
-  private readUserConfig() {
-    const userConfigPath = path.join(this.config.dataDir, "user.json");
-    let userConfigRaw = "";
-
-    try {
-      userConfigRaw = fs.readFileSync(userConfigPath, "utf-8");
-    } catch {
-      this.error('Set user timezone first, e.g. `diet user:timezone "Asia/Shanghai"`.');
-    }
-
-    let parsedConfig: UserConfig;
-    try {
-      parsedConfig = JSON.parse(userConfigRaw);
-    } catch {
-      this.error(`Invalid user config file at ${userConfigPath}. Please run user:timezone again.`);
-    }
-
-    const timezone = parsedConfig.timezone;
-    if (!timezone) {
-      this.error('Set user timezone first, e.g. `diet user:timezone "Asia/Shanghai"`.');
-    }
-
-    return parsedConfig;
-  }
-
-  private parseDateFlag(value: string, flagName: string, timezone: string) {
-    const normalized = value.trim();
-    if (!normalized) {
-      this.error(`${flagName} must be a valid datetime, e.g. "2026-03-31 12:30"`);
-    }
-
-    let parsed;
-    try {
-      parsed = datetime.tz(normalized, timezone);
-    } catch {
-      this.error(`invalid user timezone "${timezone}". Please run user:timezone again.`);
-    }
-
-    if (!parsed.isValid()) {
-      this.error(`${flagName} must be a valid datetime, e.g. "2026-03-31 12:30"`);
-    }
-
-    return parsed.toDate();
+    process.stdout.write(`${JSON.stringify(record, null, 2)}\n`);
   }
 }
