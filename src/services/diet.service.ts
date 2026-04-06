@@ -4,8 +4,8 @@ import { AddMealDto, SearchDietDto, DietRecord } from "../types/index.js";
 export function addRecord(db: Database.Database, dto: AddMealDto) {
   try {
     const statement = db.prepare(`
-      INSERT INTO diet (create_at, eat_at, meal_type, title, foods, calories, protein, carbs, fat)
-      VALUES (@create_at, @eat_at, @meal_type, @title, @foods, @calories, @protein, @carbs, @fat)
+      INSERT INTO diet (create_at, eat_at, meal_type, foods, calories, protein, carbs, fat)
+      VALUES (@create_at, @eat_at, @meal_type, @foods, @calories, @protein, @carbs, @fat)
     `);
 
     return statement.run({
@@ -15,9 +15,8 @@ export function addRecord(db: Database.Database, dto: AddMealDto) {
       protein: dto.protein ?? 0,
       create_at: new Date().toISOString(),
       eat_at: dto.eatAt,
-      food: dto.foods,
+      foods: dto.foods,
       meal_type: dto.mealType,
-      title: dto.title,
     });
   } finally {
     db.close();

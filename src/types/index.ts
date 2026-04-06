@@ -14,7 +14,6 @@ export interface AddMealDto {
   fat: number;
   eatAt: string;
   mealType: MealType;
-  title: string;
   foods: string;
 }
 

@@ -13,7 +13,6 @@ export function createDietDatabase(dbPath: string): Database.Database {
       create_at TEXT NOT NULL,
       eat_at TEXT NOT NULL,
       meal_type TEXT NOT NULL,
-      title TEXT NOT NULL,
       foods TEXT NOT NULL,
       calories INTEGER,
       protein INTEGER,

@@ -29,8 +29,7 @@ export default class UserTimezone extends Command {
     fs.writeFileSync(userConfigPath, `${JSON.stringify({ timezone: normalizedTimezone }, null, 2)}\n`, {
       encoding: "utf-8",
     });
-
-    process.stdout.write(`User timezone set to ${normalizedTimezone}`);
+    process.stdout.write(`User timezone set to "${normalizedTimezone}"\n`);
   }
 
   private normalizeTimezone(timezone: string): string {

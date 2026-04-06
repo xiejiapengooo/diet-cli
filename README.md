@@ -53,16 +53,14 @@ diet --help
 
 ### 1) 新增饮食记录
 
-4 个命令共享同一套参数：
+统一使用单一命令：
 
-- `diet add:breakfast FOOD`
-- `diet add:lunch FOOD`
-- `diet add:dinner FOOD`
-- `diet add:snack FOOD`
+- `diet add:meal`
 
 必填 flags：
 
-- `--title`：记录标题
+- `--meal`：餐型（`breakfast` / `lunch` / `dinner` / `snack`）
+- `--foods`：食物内容（自由文本）
 - `--at`：进食时间（例如 `"2026-03-31 12:30"`）
 - `--calories`：热量（kcal，整数，`>= 0`）
 - `--protein`：蛋白质（g，整数，`>= 0`）
@@ -72,8 +70,9 @@ diet --help
 示例：
 
 ```bash
-diet add:breakfast "oatmeal" \
-  --title "Oatmeal with banana" \
+diet add:meal \
+  --meal breakfast \
+  --foods "oatmeal(one bowl) + banana(one)" \
   --at "2026-03-31 08:00" \
   --calories 420 \
   --protein 18 \
