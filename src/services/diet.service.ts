@@ -8,16 +8,23 @@ export function addRecord(db: Database.Database, dto: AddMealDto) {
       VALUES (@create_at, @eat_at, @meal_type, @foods, @calories, @protein, @carbs, @fat)
     `);
 
-    return statement.run({
+    const data = {
       calories: dto.calories ?? 0,
       carbs: dto.carbs ?? 0,
       fat: dto.fat ?? 0,
       protein: dto.protein ?? 0,
       create_at: new Date().toISOString(),
-      eat_at: dto.eatAt,
+      eat_at: dto.eatAt.toISOString(),
       foods: dto.foods,
       meal_type: dto.mealType,
-    });
+    };
+
+    const result = statement.run(data);
+
+    return {
+      id: result.lastInsertRowid,
+      ...data,
+    };
   } finally {
     db.close();
   }

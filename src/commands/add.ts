@@ -34,7 +34,7 @@ export default class Add extends Command {
   public async run(): Promise<void> {
     const userConfig = this.readUserConfig();
     const { flags } = await this.parse(Add);
-    const mealType = flags.meal;
+    const mealType = flags.meal as MealType;
     const foods = flags.foods.trim();
 
     if (foods.length === 0) {
@@ -57,20 +57,17 @@ export default class Add extends Command {
     const eatAt = this.parseDateFlag(flags.at, "--at", userConfig.timezone);
 
     const db = createDietDatabase(path.join(this.config.dataDir, "diet.db"));
-    const result = addRecord(db, {
+    const record = addRecord(db, {
       calories: flags.calories,
       protein: flags.protein,
       carbs: flags.carbs,
       fat: flags.fat,
-      mealType: flags.meal as any,
+      mealType,
       foods,
       eatAt,
     });
 
-    const eatAtDisplay = datetime(eatAt).tz(userConfig.timezone).format("YYYY-MM-DD HH:mm");
-    process.stdout.write(`Added ${mealType} #${result.lastInsertRowid}\n`);
-    process.stdout.write(`Food: ${foods}\n`);
-    process.stdout.write(`EatAt: ${eatAtDisplay}\n`);
+    process.stdout.write(`${JSON.stringify(record)}\n`);
   }
 
   private readUserConfig() {
@@ -98,7 +95,7 @@ export default class Add extends Command {
     return parsedConfig;
   }
 
-  private parseDateFlag(value: string, flagName: string, timezone: string): string {
+  private parseDateFlag(value: string, flagName: string, timezone: string) {
     const normalized = value.trim();
     if (!normalized) {
       this.error(`${flagName} must be a valid datetime, e.g. "2026-03-31 12:30"`);
@@ -115,6 +112,6 @@ export default class Add extends Command {
       this.error(`${flagName} must be a valid datetime, e.g. "2026-03-31 12:30"`);
     }
 
-    return parsed.toISOString();
+    return parsed.toDate();
   }
 }

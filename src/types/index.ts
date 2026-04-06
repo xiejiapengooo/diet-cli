@@ -12,7 +12,7 @@ export interface AddMealDto {
   protein: number;
   carbs: number;
   fat: number;
-  eatAt: string;
+  eatAt: Date;
   mealType: MealType;
   foods: string;
 }
