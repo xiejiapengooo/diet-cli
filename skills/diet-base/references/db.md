@@ -1,40 +1,45 @@
 # +db
 
-用于定位和检查本地 SQLite 数据文件。
+用于定位和检查本地 SQLite 数据与时区配置文件。
+
+说明：`$DIET_CMD` 来自 `+install`，实际可替换为 `diet` 或 `node bin/run.js`。
 
 ## 数据目录
 
-默认数据库路径：
+默认目录：
+
+```bash
+${XDG_DATA_HOME:-$HOME/.local/share}/diet
+```
+
+默认文件：
 
 ```bash
 ${XDG_DATA_HOME:-$HOME/.local/share}/diet/diet.db
+${XDG_DATA_HOME:-$HOME/.local/share}/diet/user.json
 ```
 
-在当前环境可用以下命令快速查看：
-
-```bash
-DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/diet"
-DB_PATH="$DATA_DIR/diet.db"
-echo "$DB_PATH"
-```
-
-如用户设置了 `XDG_DATA_HOME`，路径会自动跟随该变量变化。
+如用户设置了 `XDG_DATA_HOME`，路径会随之变化。
 
 ## 快速检查
 
 ```bash
 DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/diet"
 DB_PATH="$DATA_DIR/diet.db"
+USER_CONFIG="$DATA_DIR/user.json"
+
 ls -la "$DATA_DIR"
 sqlite3 "$DB_PATH" ".tables"
 sqlite3 "$DB_PATH" "select * from diet order by id desc limit 20;"
+cat "$USER_CONFIG"
 ```
 
 ## 隔离测试（推荐）
 
-为了不污染用户真实数据，可临时指定独立数据目录：
+为了不污染真实数据，可临时指定独立目录：
 
 ```bash
-XDG_DATA_HOME=/tmp/diet-skill-check diet add:snack "nuts" --title "test" --at "2026-04-02 16:00" --calories 180 --protein 6 --carbs 8 --fat 14
-XDG_DATA_HOME=/tmp/diet-skill-check diet search "nuts"
+XDG_DATA_HOME=/tmp/diet-skill-check $DIET_CMD user:timezone "Asia/Shanghai"
+XDG_DATA_HOME=/tmp/diet-skill-check $DIET_CMD add --meal snack --foods "nuts(30g)" --at "2026-04-02 16:00" --calories 180 --protein 6 --carbs 8 --fat 14
+XDG_DATA_HOME=/tmp/diet-skill-check $DIET_CMD search "nuts"
 ```
