@@ -7,6 +7,7 @@
 - 记录 4 类饮食：`breakfast`、`lunch`、`dinner`、`snack`
 - 保存每条记录的时间、标题、食物和三大营养素（以及热量）
 - 支持按关键词检索，且可按餐别/时间范围过滤
+- 支持按记录 ID 删除历史记录
 - 本地 SQLite 持久化，无需额外服务
 
 ## 环境要求
@@ -55,7 +56,7 @@ diet --help
 
 统一使用单一命令：
 
-- `diet add:meal`
+- `diet add`
 
 必填 flags：
 
@@ -70,7 +71,7 @@ diet --help
 示例：
 
 ```bash
-diet add:meal \
+diet add \
   --meal breakfast \
   --foods "oatmeal(one bowl) + banana(one)" \
   --at "2026-03-31 08:00" \
@@ -96,6 +97,20 @@ diet search KEYWORD [--meal breakfast|lunch|dinner|snack] [--from "..."] [--to "
 ```bash
 diet search "beef"
 diet search "salmon" --meal dinner --from "2026-03-30 00:00" --to "2026-03-31 23:59"
+```
+
+### 3) 删除饮食记录
+
+```bash
+diet delete ID
+```
+
+- `ID`：记录 id（正整数）
+
+示例：
+
+```bash
+diet delete 12
 ```
 
 ## 项目脚本

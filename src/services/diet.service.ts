@@ -62,3 +62,13 @@ export function searchRecords(db: Database.Database, dto: SearchDietDto): DietRe
     db.close();
   }
 }
+
+export function deleteRecordById(db: Database.Database, id: number): boolean {
+  try {
+    const statement = db.prepare("DELETE FROM diet WHERE id = ?");
+    const result = statement.run(id);
+    return result.changes > 0;
+  } finally {
+    db.close();
+  }
+}
