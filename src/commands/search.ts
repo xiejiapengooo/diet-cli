@@ -38,7 +38,7 @@ export default class Search extends Command {
       this.error("keyword cannot be empty");
     }
 
-    const mealType = flags.meal as (MealType | undefined);
+    const mealType = flags.meal as MealType | undefined;
     const fromEatAt = flags.from ? parseDateFlag(this, flags.from, "--from", userConfig.timezone) : void 0;
     const toEatAt = flags.to ? parseDateFlag(this, flags.to, "--to", userConfig.timezone) : void 0;
 
@@ -47,7 +47,7 @@ export default class Search extends Command {
       keyword,
       fromEatAt,
       toEatAt,
-      mealType
+      mealType,
     });
 
     if (records.length === 0) {
@@ -55,13 +55,12 @@ export default class Search extends Command {
       return;
     }
 
-    const headers = ["id", "meal", "eat_at", "title", "food", "kcal", "P(g)", "C(g)", "F(g)"];
+    const headers = ["id", "meal", "eat_at", "foods", "kcal", "P(g)", "C(g)", "F(g)"];
     const rows = records.map((record) => [
       String(record.id),
       record.meal_type,
       record.eat_at,
-      record.title,
-      record.food,
+      record.foods,
       String(record.calories),
       String(record.protein),
       String(record.carbs),

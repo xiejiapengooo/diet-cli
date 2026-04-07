@@ -32,7 +32,7 @@ export function addRecord(db: Database.Database, dto: AddMealDto) {
 
 export function searchRecords(db: Database.Database, dto: SearchDietDto): DietRecord[] {
   try {
-    const conditions: string[] = ["(title LIKE @keyword COLLATE NOCASE OR food LIKE @keyword COLLATE NOCASE)"];
+    const conditions: string[] = ["(foods LIKE @keyword COLLATE NOCASE)"];
     const params: Record<string, unknown> = {
       keyword: `%${dto.keyword}%`,
     };

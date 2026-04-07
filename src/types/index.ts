@@ -29,8 +29,7 @@ export interface DietRecord {
   create_at: string;
   eat_at: string;
   meal_type: MealType;
-  title: string;
-  food: string;
+  foods: string;
   calories: number;
   protein: number;
   carbs: number;
