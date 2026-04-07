@@ -1,13 +1,13 @@
 # +timezone
 
-用于初始化或更新用户时区。`add` 和 `search` 在当前实现中都依赖该配置。
+用于初始化或更新用户时区。
 
-说明：`$DIET_CMD` 来自 `+install`，实际可替换为 `diet` 或 `node bin/run.js`。
+说明：统一使用已安装的 `diet` 命令。
 
 ## 命令模板
 
 ```bash
-$DIET_CMD user:timezone "Asia/Shanghai"
+diet user:timezone "Asia/Shanghai"
 ```
 
 ## 何时执行

@@ -2,12 +2,10 @@
 
 用于按关键词检索饮食记录，并可附加餐别和时间范围过滤。
 
-说明：`$DIET_CMD` 来自 `+install`，实际可替换为 `diet` 或 `node bin/run.js`。
-
 ## 命令模板
 
 ```bash
-$DIET_CMD search "<keyword>" \
+diet search "<keyword>" \
   [--meal breakfast|lunch|dinner|snack] \
   [--from "YYYY-MM-DD HH:mm"] \
   [--to "YYYY-MM-DD HH:mm"]
@@ -16,8 +14,8 @@ $DIET_CMD search "<keyword>" \
 ## 示例
 
 ```bash
-$DIET_CMD search "beef"
-$DIET_CMD search "salmon" --meal dinner --from "2026-03-30 00:00" --to "2026-03-31 23:59"
+diet search "beef"
+diet search "salmon" --meal dinner --from "2026-03-30 00:00" --to "2026-03-31 23:59"
 ```
 
 ## 过滤策略

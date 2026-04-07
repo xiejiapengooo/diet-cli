@@ -2,8 +2,6 @@
 
 用于定位和检查本地 SQLite 数据与时区配置文件。
 
-说明：`$DIET_CMD` 来自 `+install`，实际可替换为 `diet` 或 `node bin/run.js`。
-
 ## 数据目录
 
 默认目录：
@@ -39,7 +37,7 @@ cat "$USER_CONFIG"
 为了不污染真实数据，可临时指定独立目录：
 
 ```bash
-XDG_DATA_HOME=/tmp/diet-skill-check $DIET_CMD user:timezone "Asia/Shanghai"
-XDG_DATA_HOME=/tmp/diet-skill-check $DIET_CMD add --meal snack --foods "nuts(30g)" --at "2026-04-02 16:00" --calories 180 --protein 6 --carbs 8 --fat 14
-XDG_DATA_HOME=/tmp/diet-skill-check $DIET_CMD search "nuts"
+XDG_DATA_HOME=/tmp/diet-skill-check diet user:timezone "Asia/Shanghai"
+XDG_DATA_HOME=/tmp/diet-skill-check diet add --meal snack --foods "nuts(30g)" --at "2026-04-02 16:00" --calories 180 --protein 6 --carbs 8 --fat 14
+XDG_DATA_HOME=/tmp/diet-skill-check diet search "nuts"
 ```

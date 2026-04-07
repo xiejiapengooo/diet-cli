@@ -1,13 +1,11 @@
 # +add
 
-用于新增饮食记录（当前实现为单命令 `add --meal ...`）。
-
-说明：`$DIET_CMD` 来自 `+install`，实际可替换为 `diet` 或 `node bin/run.js`。
+用于新增饮食记录。
 
 ## 命令模板
 
 ```bash
-$DIET_CMD add \
+diet add \
   --meal breakfast|lunch|dinner|snack \
   --foods "<food-list>" \
   --at "YYYY-MM-DD HH:mm" \
@@ -20,7 +18,7 @@ $DIET_CMD add \
 ## 示例
 
 ```bash
-$DIET_CMD add \
+diet add \
   --meal breakfast \
   --foods "oatmeal(one bowl) + banana(one)" \
   --at "2026-03-31 08:00" \
@@ -56,5 +54,3 @@ $DIET_CMD add \
   "meal_type": "breakfast"
 }
 ```
-
-向用户回报时，至少包含 `id`、`meal_type`、`eat_at`、`foods`。

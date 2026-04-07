@@ -2,19 +2,29 @@
 
 用于收集并标准化 `add` 命令所需参数。
 
-说明：`$DIET_CMD` 来自 `+install`，实际可替换为 `diet` 或 `node bin/run.js`。
-
 ## 目标字段
 
 `add` 命令必须拿到以下字段：
 
 1. `meal`：`breakfast|lunch|dinner|snack`
-2. `foods`：食物文本（可含份量）
+2. `foods`：必须使用 `食物1(份量) + 食物2(份量) + 食物3(份量)` 的拼接格式
 3. `at`：绝对时间字符串（`YYYY-MM-DD HH:mm`）
 4. `calories`：整数，`>= 0`
 5. `protein`：整数，`>= 0`
 6. `carbs`：整数，`>= 0`
 7. `fat`：整数，`>= 0`
+
+## foods 字段格式（必须）
+
+- 使用 `食物名(份量)` 作为单项格式
+- 多个食物用 ` + ` 连接
+- 目标格式：`食物1(份量) + 食物2(份量) + 食物3(份量)`
+- 食物数量可按实际增减，但每一项都必须带 `(...)` 份量
+
+示例：
+
+- `米饭(1 bowl) + 清蒸鱼(150g) + 西兰花(100g)`
+- `酸奶(200ml) + 蓝莓(50g) + 坚果(20g)`
 
 ## 对话策略
 
@@ -37,7 +47,7 @@
 - 若用户没给时间：使用会话当前时间并对齐到分钟
 - 若用户没给份量：写成常见份量（如 `1 bowl` / `1 cup` / `100g`）
 
-## 时间规则（必须）
+## 时间规则
 
 1. 先用用户时区解释时间词（若未明确，使用会话时区）
 2. 生成绝对时间字符串给 `--at`
@@ -53,7 +63,7 @@
 
 ```text
 meal: breakfast
-foods: oatmeal(one bowl) + banana(one)
+foods: oatmeal(1 bowl) + banana(1) + milk(250ml)
 at: 2026-04-07 08:00
 calories: 420
 protein: 18
@@ -64,7 +74,7 @@ fat: 11
 ## 组装命令
 
 ```bash
-$DIET_CMD add \
+diet add \
   --meal "<meal>" \
   --foods "<foods>" \
   --at "<at>" \
