@@ -10,9 +10,15 @@
 - `diet delete`：按记录 ID 删除记录
 - 数据本地存储在 SQLite，不依赖远程服务
 
-## Install CLI
+## Install
 
-要求：`Node.js >= 18`
+### For Agent
+
+```bash
+npx skills add xiejiapengoooo/diet-cli
+```
+
+### For Human
 
 ```bash
 npm i -g @xiejiapeng/diet-cli
@@ -57,5 +63,4 @@ diet search "salmon" --meal dinner --from "2026-03-30 00:00" --to "2026-03-31 23
 ```bash
 diet delete 12
 ```
-
 
