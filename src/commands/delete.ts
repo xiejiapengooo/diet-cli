@@ -1,6 +1,6 @@
 import { Args, Command } from "@oclif/core";
 import { getDietDatabase } from "../db/db.js";
-import { deleteRecordById } from "../services/diet.service.js";
+import { deleteRecord } from "../services/diet.service.js";
 
 export default class Delete extends Command {
   static override description = "delete a diet record by id";
@@ -15,17 +15,14 @@ export default class Delete extends Command {
     const { args } = await this.parse(Delete);
     const id = args.id;
 
-    if (id <= 0) {
-      this.error("id must be a positive integer");
-    }
-
     const db = getDietDatabase(this.config.dataDir);
-    const deleted = deleteRecordById(db, id);
+    const deleted = deleteRecord(db, id);
 
     if (!deleted) {
-      this.error(`record #${id} not found`);
+      process.stdout.write(`Record #${id} not found\n`);
+      return;
     }
 
-    process.stdout.write(`Deleted record #${id}.\n`);
+    process.stdout.write(`Record #${id} deleted\n`);
   }
 }

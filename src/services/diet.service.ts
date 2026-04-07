@@ -63,7 +63,7 @@ export function searchRecords(db: Database.Database, dto: SearchDietDto): DietRe
   }
 }
 
-export function deleteRecordById(db: Database.Database, id: number): boolean {
+export function deleteRecord(db: Database.Database, id: number): boolean {
   try {
     const statement = db.prepare("DELETE FROM diet WHERE id = ?");
     const result = statement.run(id);
