@@ -2,13 +2,17 @@
 
 用于确认 `diet` 命令可用。
 
-说明：版本检查逻辑统一放在 [`+check-update`](./check-update.md)，这里先执行它，再做可用性校验。
+说明：这里仅做可用性校验，不做版本检查（版本检查请走 [`+check-update`](./check-update.md)）。
 
-## 1) 先检查版本（不一致先自动安装，失败即停止）
+## 1) 命令存在性检查
 
-按 [`+check-update`](./check-update.md) 执行。
+```bash
+command -v diet
+```
 
-## 2) 简单校验
+若不存在，则按 [`+check-update`](./check-update.md) 执行安装/修复后再继续。
+
+## 2) 简单可执行校验
 
 ```bash
 diet --help

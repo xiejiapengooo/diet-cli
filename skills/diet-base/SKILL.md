@@ -21,11 +21,12 @@ metadata:
 
 ## 执行原则
 
-1. 先按 [`+check-update`](./references/check-update.md) 检查 `diet` 版本
-2. 若版本不一致，先尝试自动安装目标版本；若安装失败、npm 无对应版本或安装后仍不一致，则立即停止并告知用户
-3. 版本检查通过后按 [`+install`](./references/install.md) 检查 `diet` 命令可用
-4. `add` / `search` 依赖用户时区配置；首次执行前先走 [`+timezone`](./references/timezone.md)
-5. 写后读串行执行，避免 SQLite `database is locked`
+1. 首次调用 `add/search/delete` 前，按 [`+check-update`](./references/check-update.md) 做一次版本检查
+2. 若版本不一致，尝试自动安装目标版本；若安装失败或安装后仍不一致，则立即停止并告知用户
+3. 版本通过后按 [`+install`](./references/install.md) 检查 `diet` 命令可用
+4. 同一会话内无需在每次 `add/search/delete` 前重复执行 `check-update/install`，除非命令报错或用户要求升级
+5. `add` / `search` 依赖用户时区配置；首次执行前先走 [`+timezone`](./references/timezone.md)
+6. 写后读串行执行，避免 SQLite `database is locked`
 
 ## 命令面向
 
@@ -49,7 +50,7 @@ metadata:
 
 ### Step 1: 解析可执行命令
 
-先按 [`+check-update`](./references/check-update.md) 检查版本：不一致先尝试自动安装，若失败则停止并告知用户；通过后再按 [`+install`](./references/install.md) 确认 `diet` 可直接调用。
+在当前会话第一次执行业务命令前，先按 [`+check-update`](./references/check-update.md) 检查版本：不一致先尝试自动安装，若失败则停止并告知用户；通过后再按 [`+install`](./references/install.md) 确认 `diet` 可直接调用。
 
 ### Step 2: 确认时区配置
 
