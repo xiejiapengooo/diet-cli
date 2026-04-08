@@ -32,10 +32,13 @@ export function addRecord(db: Database.Database, dto: AddMealDto) {
 
 export function searchRecords(db: Database.Database, dto: SearchDietDto): DietRecord[] {
   try {
-    const conditions: string[] = ["(foods LIKE @keyword COLLATE NOCASE)"];
-    const params: Record<string, unknown> = {
-      keyword: `%${dto.keyword}%`,
-    };
+    const conditions: string[] = [];
+    const params: Record<string, unknown> = {};
+
+    if (dto.keyword) {
+      conditions.push("(foods LIKE @keyword COLLATE NOCASE)");
+      params.keyword = `%${dto.keyword}%`;
+    }
 
     if (dto.mealType) {
       conditions.push("meal_type = @meal_type");
@@ -53,9 +56,7 @@ export function searchRecords(db: Database.Database, dto: SearchDietDto): DietRe
     }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
-    const statement = db.prepare<any, DietRecord>(`
-      SELECT * FROM diet ${whereClause} ORDER BY eat_at DESC
-    `);
+    const statement = db.prepare<any, DietRecord>(`SELECT * FROM diet ${whereClause} ORDER BY eat_at DESC`);
 
     return statement.all(params);
   } finally {

@@ -18,7 +18,7 @@ export interface AddMealDto {
 }
 
 export interface SearchDietDto {
-  keyword: string;
+  keyword?: string;
   mealType?: MealType;
   fromEatAt?: Date;
   toEatAt?: Date;

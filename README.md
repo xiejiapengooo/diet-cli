@@ -6,7 +6,7 @@
 
 - `diet user:timezone`：设置用户时区（`add/search` 前必需）
 - `diet add`：新增饮食记录（早餐/午餐/晚餐/加餐）
-- `diet search`：按关键词检索，可按餐别和时间范围过滤
+- `diet search`：搜索饮食记录
 - `diet delete`：按记录 ID 删除记录
 - 数据本地存储在 SQLite，不依赖远程服务
 
@@ -55,6 +55,7 @@ diet add \
 
 ```bash
 diet search "banana"
+diet search --from "2026-04-07 00:00" --to "2026-04-07 23:59"
 diet search "salmon" --meal dinner --from "2026-03-30 00:00" --to "2026-03-31 23:59"
 ```
 

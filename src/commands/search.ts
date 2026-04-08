@@ -5,15 +5,16 @@ import { MealType, MealTypes } from "../types/index.js";
 import { parseDateFlag, readUserConfig } from "../utils/command.js";
 
 export default class Search extends Command {
-  static override description = "search diet records by keyword";
+  static override description = "search diet records";
 
   static override examples = [
     `<%= config.bin %> <%= command.id %> "beef"`,
+    `<%= config.bin %> <%= command.id %> --from "2026-03-30 00:00" --to "2026-03-31 23:59"`,
     `<%= config.bin %> <%= command.id %> "salmon" --meal dinner --from "2026-03-30 00:00" --to "2026-03-31 23:59"`,
   ];
 
   static override args = {
-    keyword: Args.string({ description: "keyword to match in foods", required: true }),
+    keyword: Args.string({ description: "keyword to match in foods", required: false }),
   };
 
   static override flags = {
@@ -33,11 +34,7 @@ export default class Search extends Command {
     const userConfig = readUserConfig(this);
     const { args, flags } = await this.parse(Search);
 
-    const keyword = args.keyword.trim();
-    if (keyword.length === 0) {
-      this.error("keyword cannot be empty");
-    }
-
+    const keyword = args.keyword?.trim();
     const mealType = flags.meal as MealType | undefined;
     const fromEatAt = flags.from ? parseDateFlag(this, flags.from, "--from", userConfig.timezone) : void 0;
     const toEatAt = flags.to ? parseDateFlag(this, flags.to, "--to", userConfig.timezone) : void 0;
