@@ -1,17 +1,12 @@
 # +install
 
-用于确认 `diet` 命令可用。若未安装，自动安装后再继续。
+用于确认 `diet` 命令可用。
 
-## 1) 未安装则自动安装
+说明：版本对齐逻辑统一放在 [`+check-update`](./check-update.md)，这里先执行它，再做可用性校验。
 
-```bash
-if ! command -v diet >/dev/null 2>&1; then
-  npm i -g @xiejiapeng/diet-cli
-  hash -r
-fi
+## 1) 先对齐版本（自动升级）
 
-echo "diet command is ready"
-```
+按 [`+check-update`](./check-update.md) 执行。
 
 ## 2) 简单校验
 
