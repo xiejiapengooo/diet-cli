@@ -1,6 +1,6 @@
 ---
 name: diet-base
-version: 0.1.0
+version: 0.2.0
 description: "基于 diet 命令，完成时区设置与饮食记录增删查，实现日常饮食记录与检索"
 metadata:
   requires:
