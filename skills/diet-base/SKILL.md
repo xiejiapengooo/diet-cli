@@ -21,10 +21,11 @@ metadata:
 
 ## 执行原则
 
-1. 先按 [`+check-update`](./references/check-update.md) 对齐 `diet` 版本
-2. 再按 [`+install`](./references/install.md) 检查 `diet` 命令可用
-3. `add` / `search` 依赖用户时区配置；首次执行前先走 [`+timezone`](./references/timezone.md)
-4. 写后读串行执行，避免 SQLite `database is locked`
+1. 先按 [`+check-update`](./references/check-update.md) 检查 `diet` 版本
+2. 若版本不一致，先尝试自动安装目标版本；若安装失败、npm 无对应版本或安装后仍不一致，则立即停止并告知用户
+3. 版本检查通过后按 [`+install`](./references/install.md) 检查 `diet` 命令可用
+4. `add` / `search` 依赖用户时区配置；首次执行前先走 [`+timezone`](./references/timezone.md)
+5. 写后读串行执行，避免 SQLite `database is locked`
 
 ## 命令面向
 
@@ -35,7 +36,7 @@ metadata:
 
 ## Shortcuts（按推荐顺序）
 
-- [`+check-update`](./references/check-update.md) - 校验并自动升级到 Skill 版本
+- [`+check-update`](./references/check-update.md) - 校验版本并尝试自动安装；失败则停止并提示
 - [`+install`](./references/install.md) - 用户安装与命令可用性检查
 - [`+timezone`](./references/timezone.md) - 初始化或更新用户时区
 - [`+message`](./references/message.md) - 收集用户饮食信息并生成参数
@@ -48,7 +49,7 @@ metadata:
 
 ### Step 1: 解析可执行命令
 
-先按 [`+check-update`](./references/check-update.md) 对齐版本，再按 [`+install`](./references/install.md) 确认 `diet` 可直接调用。
+先按 [`+check-update`](./references/check-update.md) 检查版本：不一致先尝试自动安装，若失败则停止并告知用户；通过后再按 [`+install`](./references/install.md) 确认 `diet` 可直接调用。
 
 ### Step 2: 确认时区配置
 

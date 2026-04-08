@@ -2,9 +2,9 @@
 
 用于确认 `diet` 命令可用。
 
-说明：版本对齐逻辑统一放在 [`+check-update`](./check-update.md)，这里先执行它，再做可用性校验。
+说明：版本检查逻辑统一放在 [`+check-update`](./check-update.md)，这里先执行它，再做可用性校验。
 
-## 1) 先对齐版本（自动升级）
+## 1) 先检查版本（不一致先自动安装，失败即停止）
 
 按 [`+check-update`](./check-update.md) 执行。
 
