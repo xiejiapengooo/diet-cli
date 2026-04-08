@@ -35,7 +35,7 @@ diet add \
 - 四个营养数字必须 `>= 0`，否则会报错 `--<name> must be >= 0`
 - `--at` 需要是合法时间字符串（如 `"2026-03-31 12:30"`）
 - 执行前必须已设置用户时区，否则会提示：
-  - `Set user timezone first, e.g. diet user:timezone "Asia/Shanghai".`
+  - `Set user timezone first, e.g. diet user:timezone "<IANA_TIMEZONE>".`
 
 ## 输出解析
 

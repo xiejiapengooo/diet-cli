@@ -11,7 +11,7 @@ export function readUserConfig(that: Command) {
   try {
     userConfigRaw = fs.readFileSync(userConfigPath, "utf-8");
   } catch {
-    that.error('Set user timezone first, e.g. `diet user:timezone "Asia/Shanghai"`.');
+    that.error('Set user timezone first, e.g. `diet user:timezone "<IANA_TIMEZONE>"`.');
   }
 
   let parsedConfig: UserConfig;
@@ -23,7 +23,7 @@ export function readUserConfig(that: Command) {
 
   const timezone = parsedConfig.timezone;
   if (!timezone) {
-    that.error('Set user timezone first, e.g. `diet user:timezone "Asia/Shanghai"`.');
+    that.error('Set user timezone first, e.g. `diet user:timezone "<IANA_TIMEZONE>"`.');
   }
 
   return parsedConfig;

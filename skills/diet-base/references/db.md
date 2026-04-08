@@ -37,7 +37,7 @@ cat "$USER_CONFIG"
 为了不污染真实数据，可临时指定独立目录：
 
 ```bash
-XDG_DATA_HOME=/tmp/diet-skill-check diet user:timezone "Asia/Shanghai"
+XDG_DATA_HOME=/tmp/diet-skill-check diet user:timezone "<IANA_TIMEZONE>"
 XDG_DATA_HOME=/tmp/diet-skill-check diet add --meal snack --foods "nuts(30g)" --at "2026-04-02 16:00" --calories 180 --protein 6 --carbs 8 --fat 14
 XDG_DATA_HOME=/tmp/diet-skill-check diet search "nuts"
 ```

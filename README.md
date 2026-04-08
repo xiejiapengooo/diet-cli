@@ -35,8 +35,10 @@ diet --help
 1. 设置时区（首次使用必做）：
 
 ```bash
-diet user:timezone "Asia/Shanghai"
+diet user:timezone "<IANA_TIMEZONE>"
 ```
+
+请根据你当前所在位置填写 IANA 时区，例如 `"America/Los_Angeles"`、`"Asia/Tokyo"`。
 
 2. 添加一条记录：
 
@@ -64,4 +66,3 @@ diet search "salmon" --meal dinner --from "2026-03-30 00:00" --to "2026-03-31 23
 ```bash
 diet delete 12
 ```
-

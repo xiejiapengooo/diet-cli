@@ -6,12 +6,12 @@ export default class UserTimezone extends Command {
   static override description = "set user timezone";
 
   static override examples = [
-    `<%= config.bin %> <%= command.id %> "Asia/Shanghai"`,
     `<%= config.bin %> <%= command.id %> "America/Los_Angeles"`,
+    `<%= config.bin %> <%= command.id %> "Europe/London"`,
   ];
 
   static override args = {
-    timezone: Args.string({ description: "IANA timezone, e.g. Asia/Shanghai", required: true }),
+    timezone: Args.string({ description: "IANA timezone, e.g. America/Los_Angeles", required: true }),
   };
 
   public async run() {
@@ -36,7 +36,9 @@ export default class UserTimezone extends Command {
     try {
       return new Intl.DateTimeFormat("en-US", { timeZone: timezone }).resolvedOptions().timeZone;
     } catch {
-      this.error(`invalid timezone "${timezone}". Please use IANA format like "Asia/Shanghai".`);
+      this.error(
+        `invalid timezone "${timezone}". Please use IANA format like "Region/City" (e.g. "America/Los_Angeles").`,
+      );
     }
   }
 }

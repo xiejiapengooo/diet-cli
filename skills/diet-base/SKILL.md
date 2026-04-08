@@ -1,6 +1,6 @@
 ---
 name: diet-base
-version: 0.2.0
+version: 0.3.0
 description: "基于 diet 命令，完成时区设置与饮食记录增删查，实现日常饮食记录与检索"
 metadata:
   requires:
@@ -25,15 +25,16 @@ metadata:
 2. 若版本不一致，尝试自动安装目标版本；若安装失败或安装后仍不一致，则立即停止并告知用户
 3. 版本通过后按 [`+install`](./references/install.md) 检查 `diet` 命令可用
 4. 同一会话内无需在每次 `add/search/delete` 前重复执行 `check-update/install`，除非命令报错或用户要求升级
-5. `add` / `search` 依赖用户时区配置；首次执行前先检查是否已配置，未配置时再走 [`+timezone`](./references/timezone.md)
-6. 写后读串行执行，避免 SQLite `database is locked`
+5. `add` / `search` 依赖用户时区配置；首次执行前先检查是否已配置，未配置时必须先询问用户位置并走 [`+timezone`](./references/timezone.md)
+6. 未配置时区时，禁止直接使用会话/系统默认时区（例如 `Asia/Shanghai`）作为兜底值
+7. 写后读串行执行，避免 SQLite `database is locked`
 
 ## 命令面向
 
 - `add`：`--meal --foods --at --calories --protein --carbs --fat`
 - `search`：`search [KEYWORD] [--meal] [--from] [--to]`
 - `delete`：`delete ID`
-- `user:timezone`：`user:timezone "Asia/Shanghai"`
+- `user:timezone`：`user:timezone "<IANA_TIMEZONE>"`
 
 ## Shortcuts（按推荐顺序）
 
@@ -54,7 +55,7 @@ metadata:
 
 ### Step 2: 检查并按需设置时区
 
-先检查用户是否已有时区配置：若已存在且有效则直接复用，不要重复设置；若不存在/无效，或用户明确更换时区，再按 [`+timezone`](./references/timezone.md) 先询问用户位置并确定时区后再设置。
+先检查用户是否已有时区配置：若已存在且有效则直接复用，不要重复设置；若不存在/无效，或用户明确更换时区，再按 [`+timezone`](./references/timezone.md) 先询问用户位置并确定时区后再设置。不要从执行环境上下文直接推断时区。
 
 ### Step 3: 执行用户任务
 
