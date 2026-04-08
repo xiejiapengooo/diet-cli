@@ -30,7 +30,7 @@ metadata:
 ## 命令面向
 
 - `add`：`--meal --foods --at --calories --protein --carbs --fat`
-- `search`：`search KEYWORD [--meal] [--from] [--to]`
+- `search`：`search [KEYWORD] [--meal] [--from] [--to]`
 - `delete`：`delete ID`
 - `user:timezone`：`user:timezone "Asia/Shanghai"`
 
@@ -41,7 +41,7 @@ metadata:
 - [`+timezone`](./references/timezone.md) - 初始化或更新用户时区
 - [`+message`](./references/message.md) - 收集用户饮食信息并生成参数
 - [`+add`](./references/add.md) - 新增饮食记录（四类餐别）
-- [`+search`](./references/search.md) - 按关键词/餐别/时间范围检索记录
+- [`+search`](./references/search.md) - 按关键词/餐别/时间范围检索记录（关键词可省略）
 - [`+delete`](./references/delete.md) - 按记录 ID 删除
 - [`+db`](./references/db.md) - 定位和检查本地 SQLite 数据库
 
