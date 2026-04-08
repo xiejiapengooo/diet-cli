@@ -15,7 +15,7 @@ USER_JSON="$DATA_DIR/user.json"
 ```
 
 2. 根据检查结果处理：
-   - 若存在有效 `timezone`（例如 `"timezone": "Asia/Shanghai"`），直接继续 `add` / `search`，不重复执行 `user:timezone`。
+   - 若存在有效 `timezone`（例如 `"timezone": "Asia/Shanghai"`），直接继续后续步骤，不重复执行 `user:timezone`。
    - 若不存在、为空，或出现无效时区报错，则先询问用户位置（至少国家+城市；必要时补充州/省），据此确定 IANA 时区后再执行设置命令。
    - 若用户明确要求更换时区，也先确认其当前位置（或目标位置）并映射为 IANA 时区后执行设置。
    - 若位置存在歧义（同名城市或跨多个时区），先向用户补充确认再设置，避免写入错误时区。
